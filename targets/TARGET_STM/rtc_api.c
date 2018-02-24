@@ -238,7 +238,10 @@ time_t rtc_read(void)
     timeinfo.tm_isdst  = -1;
 
     // Convert to timestamp
-    time_t t = _rtc_mktime(&timeinfo);
+    time_t t;
+    if (_rtc_maketime(&timeinfo, &t, RTC_4_YEAR_LEAP_YEAR_SUPPORT) == false) {
+        return 0;
+    }
 
     return t;
 }
