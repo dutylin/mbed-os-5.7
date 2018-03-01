@@ -57,14 +57,14 @@ void can_init_freq (can_t *obj, PinName rd, PinName td, int hz)
         __HAL_RCC_CAN1_CLK_ENABLE();
         obj->index = 0;
     }
-#if defined(CAN2_BASE) && (CAN_NUM > 1)
+#if defined(CAN2_BASE) && defined(CAN_2)
     else if (can == CAN_2) {
         __HAL_RCC_CAN1_CLK_ENABLE(); // needed to set filters
         __HAL_RCC_CAN2_CLK_ENABLE();
         obj->index = 1;
     }
 #endif
-#if defined(CAN3_BASE) && (CAN_NUM > 2)
+#if defined(CAN3_BASE) && defined(CAN_3)
     else if (can == CAN_3) {
         __HAL_RCC_CAN3_CLK_ENABLE();
         obj->index = 2;
@@ -103,13 +103,7 @@ void can_init_freq (can_t *obj, PinName rd, PinName td, int hz)
 
     can_registers_init(obj);
 
-    /* Bits 27:14 are available for dual CAN configuration and are reserved for
-       single CAN configuration: */
-#if defined(CAN3_BASE) && (CAN_NUM > 2)
-    uint32_t filter_number = (can == CAN_1 || can == CAN_3) ? 0 : 14;
-#else
     uint32_t filter_number = (can == CAN_1) ? 0 : 14;
-#endif
     can_filter(obj, 0, 0, CANStandard, filter_number);
 }
 
@@ -138,14 +132,14 @@ void can_free(can_t *obj)
         __HAL_RCC_CAN1_RELEASE_RESET();
         __HAL_RCC_CAN1_CLK_DISABLE();
     }
-#if defined(CAN2_BASE) && (CAN_NUM > 1)
+#if defined(CAN2_BASE) && defined(CAN_2)
     if (can == CAN_2) {
         __HAL_RCC_CAN2_FORCE_RESET();
         __HAL_RCC_CAN2_RELEASE_RESET();
         __HAL_RCC_CAN2_CLK_DISABLE();
     }
 #endif
-#if defined(CAN3_BASE) && (CAN_NUM > 2)
+#if defined(CAN3_BASE) && defined(CAN_3)
     if (can == CAN_3) {
         __HAL_RCC_CAN3_FORCE_RESET();
         __HAL_RCC_CAN3_RELEASE_RESET();
@@ -283,9 +277,9 @@ int can_write(can_t *obj, CAN_Message msg, int cc)
 
     can->sTxMailBox[transmitmailbox].TIR &= CAN_TI0R_TXRQ;
     if (!(msg.format)) {
-      can->sTxMailBox[transmitmailbox].TIR |= ((msg.id << 21) | (msg.type << 1));
+      can->sTxMailBox[transmitmailbox].TIR |= ((msg.id << 21) | msg.type);
     } else {
-      can->sTxMailBox[transmitmailbox].TIR |= ((msg.id << 3) | CAN_ID_EXT | (msg.type << 1));
+      can->sTxMailBox[transmitmailbox].TIR |= ((msg.id << 3) | CAN_ID_EXT | msg.type);
     }
 
     /* Set up the DLC */
@@ -468,11 +462,11 @@ int can_filter(can_t *obj, uint32_t id, uint32_t mask, CANFormat format, int32_t
             sFilterConfig.FilterIdLow =  0x0;
             sFilterConfig.FilterMaskIdHigh = mask << 5;
             sFilterConfig.FilterMaskIdLow = 0x0; // allows both remote and data frames
-        } else { // format == CANExtended
+        } else if (format == CANExtended) {
             sFilterConfig.FilterIdHigh = id >> 13; // EXTID[28:13]
-            sFilterConfig.FilterIdLow = (0xFFFF & (id << 3)) | (1 << 2); // EXTID[12:0] + IDE
+            sFilterConfig.FilterIdLow = (0x00FF & (id << 3)) | (1 << 2);  // EXTID[12:0]
             sFilterConfig.FilterMaskIdHigh = mask >> 13;
-            sFilterConfig.FilterMaskIdLow = (0xFFFF & (mask << 3)) | (1 << 2);
+            sFilterConfig.FilterMaskIdLow = (0x00FF & (mask << 3)) | (1 << 2);
         }
 
         sFilterConfig.FilterFIFOAssignment = 0;
@@ -568,7 +562,7 @@ void CAN1_SCE_IRQHandler(void)
 {
     can_irq(CAN_1, 0);
 }
-#if defined(CAN2_BASE) && (CAN_NUM > 1)
+#if defined(CAN2_BASE) && defined(CAN_2)
 void CAN2_RX0_IRQHandler(void)
 {
     can_irq(CAN_2, 1);
@@ -582,18 +576,18 @@ void CAN2_SCE_IRQHandler(void)
     can_irq(CAN_2, 1);
 }
 #endif
-#if defined(CAN3_BASE) && (CAN_NUM > 2)
+#if defined(CAN3_BASE) && defined(CAN_3)
 void CAN3_RX0_IRQHandler(void)
 {
-    can_irq(CAN_3, 2);
+    can_irq(CAN_3, 1);
 }
 void CAN3_TX_IRQHandler(void)
 {
-    can_irq(CAN_3, 2);
+    can_irq(CAN_3, 1);
 }
 void CAN3_SCE_IRQHandler(void)
 {
-    can_irq(CAN_3, 2);
+    can_irq(CAN_3, 1);
 }
 #endif
 #endif // else
@@ -636,7 +630,7 @@ void can_irq_set(can_t *obj, CanIrqType type, uint32_t enable)
                 return;
         }
     }
-#if defined(CAN2_BASE) && (CAN_NUM > 1)
+#if defined(CAN2_BASE) && defined(CAN_2)
     else if ((CANName) can == CAN_2) {
         switch (type) {
             case IRQ_RX:
@@ -669,7 +663,7 @@ void can_irq_set(can_t *obj, CanIrqType type, uint32_t enable)
         }
     }
 #endif
-#if defined(CAN3_BASE) && (CAN_NUM > 2)
+#if defined(CAN3_BASE) && defined(CAN_3)
     else if ((CANName) can == CAN_3) {
         switch (type) {
             case IRQ_RX:
@@ -717,3 +711,4 @@ void can_irq_set(can_t *obj, CanIrqType type, uint32_t enable)
 }
 
 #endif // DEVICE_CAN
+
