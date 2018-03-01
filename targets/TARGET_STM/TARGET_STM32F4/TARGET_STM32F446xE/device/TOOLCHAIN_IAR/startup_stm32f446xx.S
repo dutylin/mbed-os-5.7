@@ -1,6 +1,8 @@
-;/******************** (C) COPYRIGHT 2017 STMicroelectronics ********************
+;/******************** (C) COPYRIGHT 2015 STMicroelectronics ********************
 ;* File Name          : startup_stm32f446xx.s
 ;* Author             : MCD Application Team
+;* Version            : V2.3.2
+;* Date               : 26-June-2015
 ;* Description        : STM32F446xx devices vector table for EWARM toolchain.
 ;*                      This module performs:
 ;*                      - Set the initial SP
@@ -177,7 +179,7 @@ __vector_table
         DCD     0                                 ; Reserved
         DCD     0                                 ; Reserved
         DCD     SAI2_IRQHandler                   ; SAI2
-        DCD     QUADSPI_IRQHandler                ; QuadSPI
+        DCD     QuadSPI_IRQHandler                ; QuadSPI
         DCD     CEC_IRQHandler                    ; CEC
         DCD     SPDIF_RX_IRQHandler               ; SPDIF RX
         DCD     FMPI2C1_Event_IRQHandler          ; FMPI2C1 Event
@@ -646,10 +648,10 @@ SAI1_IRQHandler
 SAI2_IRQHandler 
         B SAI2_IRQHandler                     
 
-        PUBWEAK QUADSPI_IRQHandler
+        PUBWEAK QuadSPI_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1) 
-QUADSPI_IRQHandler 
-        B QUADSPI_IRQHandler                 
+QuadSPI_IRQHandler 
+        B QuadSPI_IRQHandler                 
 
         PUBWEAK CEC_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1) 

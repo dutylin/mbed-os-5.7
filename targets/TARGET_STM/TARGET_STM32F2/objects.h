@@ -145,13 +145,6 @@ struct can_s {
 };
 #endif
 
-#if DEVICE_FLASH
-struct flash_s {
-    /*  nothing to be stored for now */
-    uint32_t dummy;
-};
-#endif
-
 #define GPIO_IP_WITHOUT_BRR
 #include "gpio_object.h"
 

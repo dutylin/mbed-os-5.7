@@ -2,6 +2,8 @@
   ******************************************************************************
   * @file    stm32f0xx_hal_comp.c
   * @author  MCD Application Team
+  * @version V1.5.0
+  * @date    04-November-2016
   * @brief   COMP HAL module driver.
   *          This file provides firmware functions to manage the following 
   *          functionalities of the COMP peripheral:
@@ -186,7 +188,7 @@
 /* Literal set to maximum value (refer to device datasheet,                   */
 /* parameter "tSTART").                                                       */
 /* Unit: us                                                                   */
-#define COMP_DELAY_STARTUP_US           (60U)  /*!< Delay for COMP startup time */
+#define LL_COMP_DELAY_STARTUP_US          (60U)  /*!< Delay for COMP startup time */
 
 /* CSR register reset value */ 
 #define COMP_CSR_RESET_VALUE            (0x00000000U)
@@ -228,7 +230,7 @@
   *         parameters in the COMP_InitTypeDef and create the associated handle.
   * @note   If the selected comparator is locked, initialization can't be performed.
   *         To unlock the configuration, perform a system reset.
-  * @param  hcomp COMP handle
+  * @param  hcomp: COMP handle
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
@@ -314,7 +316,7 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
   * @brief  DeInitializes the COMP peripheral 
   * @note   Deinitialization can't be performed if the COMP configuration is locked.
   *         To unlock the configuration, perform a system reset.
-  * @param  hcomp COMP handle
+  * @param  hcomp: COMP handle
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_COMP_DeInit(COMP_HandleTypeDef *hcomp)
@@ -355,7 +357,7 @@ HAL_StatusTypeDef HAL_COMP_DeInit(COMP_HandleTypeDef *hcomp)
 
 /**
   * @brief  Initializes the COMP MSP.
-  * @param  hcomp COMP handle
+  * @param  hcomp: COMP handle
   * @retval None
   */
 __weak void HAL_COMP_MspInit(COMP_HandleTypeDef *hcomp)
@@ -370,7 +372,7 @@ __weak void HAL_COMP_MspInit(COMP_HandleTypeDef *hcomp)
 
 /**
   * @brief  DeInitializes COMP MSP.
-  * @param  hcomp COMP handle
+  * @param  hcomp: COMP handle
   * @retval None
   */
 __weak void HAL_COMP_MspDeInit(COMP_HandleTypeDef *hcomp)
@@ -404,7 +406,7 @@ __weak void HAL_COMP_MspDeInit(COMP_HandleTypeDef *hcomp)
 
 /**
   * @brief  Start the comparator 
-  * @param  hcomp COMP handle
+  * @param  hcomp: COMP handle
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_COMP_Start(COMP_HandleTypeDef *hcomp)
@@ -436,7 +438,7 @@ HAL_StatusTypeDef HAL_COMP_Start(COMP_HandleTypeDef *hcomp)
       hcomp->State = HAL_COMP_STATE_BUSY;
       
       /* Delay for COMP startup time */
-      wait_loop_index = (COMP_DELAY_STARTUP_US * (SystemCoreClock / 1000000U));
+      wait_loop_index = (LL_COMP_DELAY_STARTUP_US * (SystemCoreClock / 1000000U));
       while(wait_loop_index != 0U)
       {
         wait_loop_index--;
@@ -453,7 +455,7 @@ HAL_StatusTypeDef HAL_COMP_Start(COMP_HandleTypeDef *hcomp)
 
 /**
   * @brief  Stop the comparator 
-  * @param  hcomp COMP handle
+  * @param  hcomp: COMP handle
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_COMP_Stop(COMP_HandleTypeDef *hcomp)
@@ -493,7 +495,7 @@ HAL_StatusTypeDef HAL_COMP_Stop(COMP_HandleTypeDef *hcomp)
 
 /**
   * @brief  Enables the interrupt and starts the comparator
-  * @param  hcomp COMP handle
+  * @param  hcomp: COMP handle
   * @retval HAL status.
   */
 HAL_StatusTypeDef HAL_COMP_Start_IT(COMP_HandleTypeDef *hcomp)
@@ -540,7 +542,7 @@ HAL_StatusTypeDef HAL_COMP_Start_IT(COMP_HandleTypeDef *hcomp)
 
 /**
   * @brief  Disable the interrupt and Stop the comparator 
-  * @param  hcomp COMP handle
+  * @param  hcomp: COMP handle
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_COMP_Stop_IT(COMP_HandleTypeDef *hcomp)
@@ -557,7 +559,7 @@ HAL_StatusTypeDef HAL_COMP_Stop_IT(COMP_HandleTypeDef *hcomp)
 
 /**
   * @brief  Comparator IRQ Handler 
-  * @param  hcomp COMP handle
+  * @param  hcomp: COMP handle
   * @retval HAL status
   */
 void HAL_COMP_IRQHandler(COMP_HandleTypeDef *hcomp)
@@ -596,7 +598,7 @@ void HAL_COMP_IRQHandler(COMP_HandleTypeDef *hcomp)
 
 /**
   * @brief  Lock the selected comparator configuration. 
-  * @param  hcomp COMP handle
+  * @param  hcomp: COMP handle
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_COMP_Lock(COMP_HandleTypeDef *hcomp)
@@ -641,7 +643,7 @@ HAL_StatusTypeDef HAL_COMP_Lock(COMP_HandleTypeDef *hcomp)
   *             voltage than the inverting input
   *           - Comparator output is low when the non-inverting input is at a higher
   *             voltage than the inverting input
-  * @param  hcomp COMP handle
+  * @param  hcomp: COMP handle
   * @retval Returns the selected comparator output level: COMP_OUTPUTLEVEL_LOW or COMP_OUTPUTLEVEL_HIGH.
   *       
   */
@@ -668,7 +670,7 @@ uint32_t HAL_COMP_GetOutputLevel(COMP_HandleTypeDef *hcomp)
 
 /**
   * @brief  Comparator callback.
-  * @param  hcomp COMP handle
+  * @param  hcomp: COMP handle
   * @retval None
   */
 __weak void HAL_COMP_TriggerCallback(COMP_HandleTypeDef *hcomp)
@@ -703,7 +705,7 @@ __weak void HAL_COMP_TriggerCallback(COMP_HandleTypeDef *hcomp)
 
 /**
   * @brief  Return the COMP state
-  * @param  hcomp COMP handle
+  * @param  hcomp : COMP handle
   * @retval HAL state
   */
 uint32_t HAL_COMP_GetState(COMP_HandleTypeDef *hcomp)

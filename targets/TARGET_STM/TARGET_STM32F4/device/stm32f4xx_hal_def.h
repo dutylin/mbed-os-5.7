@@ -2,6 +2,8 @@
   ******************************************************************************
   * @file    stm32f4xx_hal_def.h
   * @author  MCD Application Team
+  * @version V1.7.1
+  * @date    14-April-2017
   * @brief   This file contains HAL common defines, enumeration, macros and 
   *          structures definitions. 
   ******************************************************************************
@@ -44,9 +46,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx.h"
-/* MBED */
 #include "stm32_hal_legacy.h"
-/* MBED */
 #include <stdio.h>
 
 /* Exported types ------------------------------------------------------------*/
@@ -86,7 +86,7 @@ typedef enum
 #define UNUSED(x) ((void)(x))
 
 /** @brief Reset the Handle's State field.
-  * @param __HANDLE__ specifies the Peripheral Handle.
+  * @param __HANDLE__: specifies the Peripheral Handle.
   * @note  This macro can be used for the following purpose: 
   *          - When the Handle is declared as local variable; before passing it as parameter
   *            to HAL_PPP_Init() for the first time, it is mandatory to use this macro 
@@ -122,8 +122,6 @@ typedef enum
                                   do{                                       \
                                       (__HANDLE__)->Lock = HAL_UNLOCKED;    \
                                     }while (0U)
-
-/* MBED */
 #if defined (__CC_ARM)
 #pragma diag_suppress 3731
 #endif
@@ -131,9 +129,9 @@ static inline  void atomic_set_u32(volatile uint32_t *ptr, uint32_t mask)
 {
 	uint32_t newValue;
 	do {
-		newValue = (uint32_t)__LDREXW(ptr) | mask;
+		newValue = (uint32_t)__LDREXW((volatile unsigned long *)ptr) | mask;
 
-	} while (__STREXW(newValue, ptr));
+	} while (__STREXW(newValue,(volatile unsigned long*) ptr));
 }
 
 
@@ -141,15 +139,14 @@ static inline  void atomic_clr_u32(volatile uint32_t *ptr, uint32_t mask)
 {
 	uint32_t newValue;
 	do {
-		newValue = (uint32_t)__LDREXW(ptr) &~mask;
+		newValue = (uint32_t)__LDREXW((volatile unsigned long *)ptr) &~mask;
 
-	} while (__STREXW(newValue, ptr));
+	} while (__STREXW(newValue,(volatile unsigned long*) ptr));
 }
-/* MBED */
 
 #endif /* USE_RTOS */
 
-#if defined ( __GNUC__ ) && !defined (__CC_ARM) /* GNU Compiler */
+#if  defined ( __GNUC__ ) && !defined ( __CC_ARM )
   #ifndef __weak
     #define __weak   __attribute__((weak))
   #endif /* __weak */
@@ -160,7 +157,7 @@ static inline  void atomic_clr_u32(volatile uint32_t *ptr, uint32_t mask)
 
 
 /* Macro to get variable aligned on 4-bytes, for __ICCARM__ the directive "#pragma data_alignment=4" must be used instead */
-#if defined ( __GNUC__ ) && !defined (__CC_ARM) /* GNU Compiler */
+#if defined   (__GNUC__)        /* GNU Compiler */
   #ifndef __ALIGN_END
     #define __ALIGN_END    __attribute__ ((aligned (4)))
   #endif /* __ALIGN_END */

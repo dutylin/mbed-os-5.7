@@ -2,6 +2,8 @@
   ******************************************************************************
   * @file    stm32f0xx_hal_irda_ex.h
   * @author  MCD Application Team
+  * @version V1.5.0
+  * @date    04-November-2016
   * @brief   Header file of IRDA HAL Extended module.
   ******************************************************************************
   * @attention
@@ -93,8 +95,8 @@
   */
 
 /** @brief  Report the IRDA clock source.
-  * @param  __HANDLE__ specifies the IRDA Handle.
-  * @param  __CLOCKSOURCE__ output variable.
+  * @param  __HANDLE__: specifies the IRDA Handle.
+  * @param  __CLOCKSOURCE__: output variable.
   * @retval IRDA clocking source, written in __CLOCKSOURCE__.
   */
 
@@ -313,7 +315,7 @@
   *         by the reception API().
   *         This masking operation is not carried out in the case of
   *         DMA transfers.
-  * @param  __HANDLE__ specifies the IRDA Handle.
+  * @param  __HANDLE__: specifies the IRDA Handle.
   * @retval None, the mask to apply to the associated UART RDR register is stored in (__HANDLE__)->Mask field.
   */
 #if defined (STM32F042x6) || defined (STM32F048xx) || \
@@ -387,7 +389,7 @@
 
 /**
   * @brief Ensure that IRDA frame length is valid.
-  * @param __LENGTH__ IRDA frame length. 
+  * @param __LENGTH__: IRDA frame length. 
   * @retval SET (__LENGTH__ is valid) or RESET (__LENGTH__ is invalid)
   */ 
 #if defined (STM32F042x6) || defined (STM32F048xx) || \

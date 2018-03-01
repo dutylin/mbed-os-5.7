@@ -29,7 +29,6 @@
  */
 
 #include "PeripheralPins.h"
-#include "mbed_toolchain.h"
 
 // =====
 // Note: Commented lines are alternative possibilities which are not used per default.
@@ -39,7 +38,7 @@
 
 //*** ADC ***
 
-MBED_WEAK const PinMap PinMap_ADC[] = {
+const PinMap PinMap_ADC[] = {
     {PA_0, ADC_1, STM_PIN_DATA_EXT(STM_MODE_ANALOG, GPIO_NOPULL, 0, 0,  0)}, // ADC1_IN0
     {PA_1, ADC_1, STM_PIN_DATA_EXT(STM_MODE_ANALOG, GPIO_NOPULL, 0, 1,  0)}, // ADC1_IN1
     {PA_2, ADC_1, STM_PIN_DATA_EXT(STM_MODE_ANALOG, GPIO_NOPULL, 0, 2,  0)}, // ADC1_IN2
@@ -67,7 +66,7 @@ MBED_WEAK const PinMap PinMap_ADC[] = {
     {NC,   NC,    0}
 };
 
-MBED_WEAK const PinMap PinMap_ADC_Internal[] = {
+const PinMap PinMap_ADC_Internal[] = {
     {ADC_TEMP, ADC_1, STM_PIN_DATA_EXT(STM_MODE_ANALOG, GPIO_NOPULL, 0, 16, 0)}, // See in analogin_api.c the correct ADC channel used
     {ADC_VREF, ADC_1, STM_PIN_DATA_EXT(STM_MODE_ANALOG, GPIO_NOPULL, 0, 17, 0)}, // See in analogin_api.c the correct ADC channel used
     {ADC_VBAT, ADC_1, STM_PIN_DATA_EXT(STM_MODE_ANALOG, GPIO_NOPULL, 0, 18, 0)}, // See in analogin_api.c the correct ADC channel used
@@ -77,7 +76,7 @@ MBED_WEAK const PinMap PinMap_ADC_Internal[] = {
 
 //*** DAC ***
 
-MBED_WEAK const PinMap PinMap_DAC[] = {
+const PinMap PinMap_DAC[] = {
     {PA_4, DAC_0, STM_PIN_DATA_EXT(STM_MODE_ANALOG, GPIO_NOPULL, 0xFF, 1,  0)}, // DAC_OUT1
     {PA_5, DAC_0, STM_PIN_DATA_EXT(STM_MODE_ANALOG, GPIO_NOPULL, 0xFF, 2,  0)}, // DAC_OUT2
     {NC,   NC,    0}
@@ -86,7 +85,7 @@ MBED_WEAK const PinMap PinMap_DAC[] = {
 
 //*** I2C ***
 
-MBED_WEAK const PinMap PinMap_I2C_SDA[] = {
+const PinMap PinMap_I2C_SDA[] = {
     {PB_7,  I2C_1, STM_PIN_DATA(STM_MODE_AF_OD, GPIO_NOPULL, GPIO_AF4_I2C1)},
     {PB_9,  I2C_1, STM_PIN_DATA(STM_MODE_AF_OD, GPIO_NOPULL, GPIO_AF4_I2C1)},
 //  {PB_11, I2C_2, STM_PIN_DATA(STM_MODE_AF_OD, GPIO_NOPULL, GPIO_AF4_I2C2)}, // SERIAL_RX
@@ -97,7 +96,7 @@ MBED_WEAK const PinMap PinMap_I2C_SDA[] = {
     {NC,    NC,    0}
 };
 
-MBED_WEAK const PinMap PinMap_I2C_SCL[] = {
+const PinMap PinMap_I2C_SCL[] = {
     {PA_8,  I2C_3, STM_PIN_DATA(STM_MODE_AF_OD, GPIO_NOPULL, GPIO_AF4_I2C3)},
     {PB_6,  I2C_1, STM_PIN_DATA(STM_MODE_AF_OD, GPIO_NOPULL, GPIO_AF4_I2C1)},
     {PB_8,  I2C_1, STM_PIN_DATA(STM_MODE_AF_OD, GPIO_NOPULL, GPIO_AF4_I2C1)},
@@ -111,7 +110,7 @@ MBED_WEAK const PinMap PinMap_I2C_SCL[] = {
 //*** PWM ***
 
 // TIM5 cannot be used because already used by the us_ticker
-MBED_WEAK const PinMap PinMap_PWM[] = {
+const PinMap PinMap_PWM[] = {
     {PA_0,  PWM_5, STM_PIN_DATA_EXT(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF2_TIM5, 1, 0)}, // TIM5_CH1
     {PA_1,  PWM_5, STM_PIN_DATA_EXT(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF2_TIM5, 2, 0)}, // TIM5_CH2
     {PA_2,  PWM_5, STM_PIN_DATA_EXT(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF2_TIM5, 3, 0)}, // TIM5_CH3
@@ -202,7 +201,7 @@ MBED_WEAK const PinMap PinMap_PWM[] = {
 
 //*** SERIAL ***
 
-MBED_WEAK const PinMap PinMap_UART_TX[] = {
+const PinMap PinMap_UART_TX[] = {
     {PA_0,  UART_4, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF8_UART4)},
     {PA_2,  UART_2, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF7_USART2)},
     {PA_9,  UART_1, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF7_USART1)},
@@ -221,7 +220,7 @@ MBED_WEAK const PinMap PinMap_UART_TX[] = {
     {NC,    NC,     0}
 };
 
-MBED_WEAK const PinMap PinMap_UART_RX[] = {
+const PinMap PinMap_UART_RX[] = {
     {PA_1,  UART_4, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF8_UART4)},
     {PA_3,  UART_2, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF7_USART2)},
     {PA_10, UART_1, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF7_USART1)},
@@ -240,7 +239,7 @@ MBED_WEAK const PinMap PinMap_UART_RX[] = {
     {NC,    NC,     0}
 };
 
-MBED_WEAK const PinMap PinMap_UART_RTS[] = {
+const PinMap PinMap_UART_RTS[] = {
     {PA_1,  UART_2, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF7_USART2)},
     {PA_12, UART_1, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF7_USART1)},
     {PB_14, UART_3, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF7_USART3)},
@@ -251,7 +250,7 @@ MBED_WEAK const PinMap PinMap_UART_RTS[] = {
     {NC,    NC,     0}
 };
 
-MBED_WEAK const PinMap PinMap_UART_CTS[] = {
+const PinMap PinMap_UART_CTS[] = {
     {PA_0,  UART_2, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF7_USART2)},
     {PA_11, UART_1, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF7_USART1)},
     {PB_13, UART_3, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF7_USART3)},
@@ -264,7 +263,7 @@ MBED_WEAK const PinMap PinMap_UART_CTS[] = {
  
 //*** SPI ***
 
-MBED_WEAK const PinMap PinMap_SPI_MOSI[] = {
+const PinMap PinMap_SPI_MOSI[] = {
    {PA_7,  SPI_1, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF5_SPI1)},
    {PB_5,  SPI_1, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF5_SPI1)},
    // {PB_5,  SPI_3, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF6_SPI3)},
@@ -282,7 +281,7 @@ MBED_WEAK const PinMap PinMap_SPI_MOSI[] = {
    {NC,    NC,    0}
 };
 
-MBED_WEAK const PinMap PinMap_SPI_MISO[] = {
+const PinMap PinMap_SPI_MISO[] = {
     {PA_6,  SPI_1, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF5_SPI1)},
     {PB_4,  SPI_1, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF5_SPI1)},
     // {PB_4,  SPI_3, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF6_SPI3)},
@@ -298,7 +297,7 @@ MBED_WEAK const PinMap PinMap_SPI_MISO[] = {
     {NC,    NC,    0}
 };
 
-MBED_WEAK const PinMap PinMap_SPI_SCLK[] = {
+const PinMap PinMap_SPI_SCLK[] = {
     {PA_5,  SPI_1, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF5_SPI1)},
     {PA_9,  SPI_2, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF5_SPI2)},
     {PB_3,  SPI_1, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF5_SPI1)},
@@ -316,7 +315,7 @@ MBED_WEAK const PinMap PinMap_SPI_SCLK[] = {
     {NC,    NC,    0}
 };
 
-MBED_WEAK const PinMap PinMap_SPI_SSEL[] = {
+const PinMap PinMap_SPI_SSEL[] = {
     {PA_4,  SPI_1, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_NOPULL, GPIO_AF5_SPI1)},
     // {PA_4,  SPI_3, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_NOPULL, GPIO_AF6_SPI3)},
     // {PA_15, SPI_1, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_NOPULL, GPIO_AF5_SPI1)},
@@ -332,14 +331,14 @@ MBED_WEAK const PinMap PinMap_SPI_SSEL[] = {
     {NC,    NC,    0}
 };
 
-MBED_WEAK const PinMap PinMap_CAN_RD[] = {
+const PinMap PinMap_CAN_RD[] = {
     {PB_5,  CAN_2, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_NOPULL, GPIO_AF9_CAN2)},
     {PB_8,  CAN_1, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_NOPULL, GPIO_AF9_CAN1)},
     {PB_12, CAN_2, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_NOPULL, GPIO_AF9_CAN2)},
     {NC,    NC,    0}
 };
 
-MBED_WEAK const PinMap PinMap_CAN_TD[] = {
+const PinMap PinMap_CAN_TD[] = {
     {PB_9,  CAN_1, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_NOPULL, GPIO_AF9_CAN1)},
     {PB_13, CAN_2, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_NOPULL, GPIO_AF9_CAN2)},
     {NC,    NC,    0}

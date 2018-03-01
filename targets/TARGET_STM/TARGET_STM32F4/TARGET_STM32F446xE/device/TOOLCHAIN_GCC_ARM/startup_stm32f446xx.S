@@ -2,7 +2,9 @@
   ******************************************************************************
   * @file      startup_stm32f446xx.s
   * @author    MCD Application Team
-  * @brief     STM32F446xx Devices vector table for GCC based toolchains. 
+  * @version   V2.3.0
+  * @date      02-March-2015
+  * @brief     STM32F446xx Devices vector table for Atollic TrueSTUDIO toolchain. 
   *            This module performs:
   *                - Set the initial SP
   *                - Set the initial PC == Reset_Handler,
@@ -14,7 +16,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT 2017 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT 2015 STMicroelectronics</center></h2>
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -56,10 +58,6 @@ defined in linker script */
 .word  _sdata
 /* end address for the .data section. defined in linker script */
 .word  _edata
-/* start address for the .bss section. defined in linker script */
-.word  _sbss
-/* end address for the .bss section. defined in linker script */
-.word  _ebss
 /* stack used for SystemInit_ExtMemCtl; always internal RAM used */
 
 /**
@@ -93,17 +91,6 @@ LoopCopyDataInit:
   adds  r2, r0, r1
   cmp  r2, r3
   bcc  CopyDataInit
-  ldr  r2, =_sbss
-  b  LoopFillZerobss
-/* Zero fill the bss segment. */  
-FillZerobss:
-  movs  r3, #0
-  str  r3, [r2], #4
-    
-LoopFillZerobss:
-  ldr  r3, = _ebss
-  cmp  r2, r3
-  bcc  FillZerobss
 
 /* Call the clock system intitialization function.*/
   bl  SystemInit   

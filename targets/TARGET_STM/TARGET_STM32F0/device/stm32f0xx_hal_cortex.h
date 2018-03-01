@@ -2,6 +2,8 @@
   ******************************************************************************
   * @file    stm32f0xx_hal_cortex.h
   * @author  MCD Application Team
+  * @version V1.5.0
+  * @date    04-November-2016
   * @brief   Header file of CORTEX HAL module.
   ******************************************************************************
   * @attention

@@ -2,6 +2,8 @@
   ******************************************************************************
   * @file    stm32l4xx_hal_def.h
   * @author  MCD Application Team
+  * @version V1.7.1
+  * @date    21-April-2017
   * @brief   This file contains HAL common defines, enumeration, macros and
   *          structures definitions.
   ******************************************************************************
@@ -122,33 +124,30 @@ typedef enum
                                       (__HANDLE__)->Lock = HAL_UNLOCKED;    \
                                     }while (0)
 #endif /* USE_RTOS */
-
-// Added for MBED PR #3062
 #if defined (__CC_ARM)
 #pragma diag_suppress 3731
 #endif
 
-// Added for MBED PR #3062
 static inline  void atomic_set_u32(volatile uint32_t *ptr, uint32_t mask)
 {
 	uint32_t newValue;
 	do {
-		newValue = (uint32_t)__LDREXW(ptr) | mask;
+		newValue = (uint32_t)__LDREXW((volatile unsigned long *)ptr) | mask;
 
-	} while (__STREXW(newValue, ptr));
+	} while (__STREXW(newValue,(volatile unsigned long*) ptr));
 }
 
-// Added for MBED PR #3062
+
 static inline  void atomic_clr_u32(volatile uint32_t *ptr, uint32_t mask)
 {
 	uint32_t newValue;
 	do {
-		newValue = (uint32_t)__LDREXW(ptr) &~mask;
+		newValue = (uint32_t)__LDREXW((volatile unsigned long *)ptr) &~mask;
 
-	} while (__STREXW(newValue, ptr));
+	} while (__STREXW(newValue,(volatile unsigned long*) ptr));
 }
 
-#if defined ( __GNUC__ ) && !defined (__CC_ARM) /* GNU Compiler */
+#if  defined ( __GNUC__ ) && !defined ( __CC_ARM )
   #ifndef __weak
     #define __weak   __attribute__((weak))
   #endif /* __weak */
@@ -159,7 +158,7 @@ static inline  void atomic_clr_u32(volatile uint32_t *ptr, uint32_t mask)
 
 
 /* Macro to get variable aligned on 4-bytes, for __ICCARM__ the directive "#pragma data_alignment=4" must be used instead */
-#if defined ( __GNUC__ ) && !defined (__CC_ARM) /* GNU Compiler */
+#if defined   (__GNUC__)        /* GNU Compiler */
   #ifndef __ALIGN_END
     #define __ALIGN_END    __attribute__ ((aligned (4)))
   #endif /* __ALIGN_END */
