@@ -1,6 +1,8 @@
-;/******************** (C) COPYRIGHT 2017 STMicroelectronics ********************
+;/******************** (C) COPYRIGHT 2016 STMicroelectronics ********************
 ;* File Name          : startup_stm32f439xx.s
 ;* Author             : MCD Application Team
+;* Version            : V2.6.0
+;* Date               : 04-November-2016
 ;* Description        : STM32F439xx devices vector table for EWARM toolchain.
 ;*                      This module performs:
 ;*                      - Set the initial SP
@@ -647,13 +649,13 @@ FPU_IRQHandler
         B FPU_IRQHandler
 
         PUBWEAK UART7_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
+        SECTION .text:CODE:REORDER:NOROOT(1) 
 UART7_IRQHandler 
         B UART7_IRQHandler  
 
         PUBWEAK UART8_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
-UART8_IRQHandler
+UART8_IRQHandler             
         B UART8_IRQHandler
 
         PUBWEAK SPI4_IRQHandler
@@ -663,7 +665,7 @@ SPI4_IRQHandler
 
         PUBWEAK SPI5_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
-SPI5_IRQHandler
+SPI5_IRQHandler   
         B SPI5_IRQHandler
 
         PUBWEAK SPI6_IRQHandler

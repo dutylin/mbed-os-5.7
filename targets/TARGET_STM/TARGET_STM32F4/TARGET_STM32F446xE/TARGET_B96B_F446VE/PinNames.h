@@ -154,18 +154,6 @@ typedef enum {
     D14         = PC_12,
     D15         = PB_10,
 
-    // STDIO for console print
-#ifdef MBED_CONF_TARGET_STDIO_UART_TX
-    STDIO_UART_TX = MBED_CONF_TARGET_STDIO_UART_TX,
-#else
-    STDIO_UART_TX = PC_10,
-#endif
-#ifdef MBED_CONF_TARGET_STDIO_UART_RX
-    STDIO_UART_RX = MBED_CONF_TARGET_STDIO_UART_RX,
-#else
-    STDIO_UART_RX = PC_11,
-#endif
-
     // Generic signals namings
     LED1        = PD_10,
     LED2        = LED1,
@@ -175,10 +163,10 @@ typedef enum {
     USER_BUTTON = PD_13,
     // Standardized button names
     BUTTON1 = USER_BUTTON,
-    SERIAL_TX   = STDIO_UART_TX,
-    SERIAL_RX   = STDIO_UART_RX,
-    USBTX       = STDIO_UART_TX,
-    USBRX       = STDIO_UART_RX,
+    SERIAL_TX   = PC_10,
+    SERIAL_RX   = PC_11,
+    USBTX       = SERIAL_TX,
+    USBRX       = SERIAL_RX,
     I2C_SCL     = D15,
     I2C_SDA     = D14,
     SPI_MOSI    = D11,
